@@ -10,15 +10,16 @@ app = Flask(__name__)
 CORS(app)  # ✅ Enable CORS to allow requests from React frontend
 
 # Load the crop recommendation model
-crop_model = joblib.load("C:/Users/LENOVO/Documents/crop-disease-project/backend/crop_model.pkl")
+crop_model = joblib.load(os.path.join(os.path.dirname(__file__), 'crop_model.pkl'))
 
 # Load the plant disease model
-disease_model = load_model("C:/Users/LENOVO/Documents/crop-disease-project/backend/plant_disease_model.keras")
+disease_model = load_model(os.path.join(os.path.dirname(__file__), 'plant_disease_model.keras'))
 
 # Upload folder path
-UPLOAD_FOLDER = r'C:\Users\LENOVO\Documents\crop-disease-project\backend\uploads'
+UPLOAD_FOLDER = os.path.join(os.path.dirname(__file__), 'uploads')
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
+
 
 # Route for crop recommendation
 @app.route('/predict_crop', methods=['POST'])
